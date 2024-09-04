@@ -2,7 +2,7 @@ import pandas as pd
 
 
 data = pd.read_csv('./scope_15.csv', header=1)
-data['second'] = data['second'] * 1000
+# data['second'] = data['second'] * 1000
 
 test_data = pd.DataFrame({
     'time':   [0, 1, 2, 3, 4, 5, 6, 7],
@@ -28,4 +28,6 @@ print(test_data)
 
 data['Volt'] = swap_eighths(data['Volt'])
 data['Volt.1'] = swap_eighths(data['Volt.1'])
+data['Volt'] = data['Volt'].apply(lambda x: -x)
+data['Volt.1'] = data['Volt.1'].apply(lambda x: -x)
 data.to_csv('./scope_15_good.csv')

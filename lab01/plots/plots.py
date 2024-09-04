@@ -1,17 +1,24 @@
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 
 def circuit_analysis():
-    input = pd.read_csv("./scope_15_good.csv")
-    # input['second'] = input['second'].apply(lambda x: 1000 * x)
-    # plt.figure()
-    plt.plot(input['second'], input['Volt'], label=r"$V_{in}$: 2 V$_{pp}$ @ 10 kHz")
-    plt.plot(input['second'], input['Volt.1'], label=r"$V_{out}$: ~140 mV @ 10 kHz")
+    data = pd.read_csv("./scope_15_good.csv")
+    data['computed_input'] = data['second'].apply(lambda t: np.sin(10e3 * np.pi * 2 * t))
+    data['computed_output'] = data['second'].apply(lambda t: 0.072056 * np.sin(10e3 * np.pi * 2 * t + 1.4987))
+    print(data)
+
+    plt.plot(data['second'], data['Volt'], 'o', label=r"$V_{in}$: 2 V$_{pp}$ @ 10 kHz", markersize=1)
+    plt.plot(data['second'], data['Volt.1'], 'o', markersize=1, label=r"$V_{out}$: ~140 mV @ 10 kHz")
+    plt.plot(data['second'], data['computed_input'], 'r', label=r"Input computed")
+    plt.plot(data['second'], data['computed_output'], 'b', label=r"Output computed")
+    
     plt.xlabel('Time [ms]')
     plt.ylabel('Voltage [V]')
-    plt.title("Phaser circuit measurement")
+    plt.title("Phasor circuit measurement")
     plt.legend()
     plt.grid(True, which='both')
+    plt.savefig('circuit_analysis.pdf')
 
 def bode_plots():
     bode_data = pd.read_csv('./scope_19.csv')
@@ -30,14 +37,12 @@ def bode_plots():
     ax2.semilogx(w, phase)
     ax2.grid(True, which='both')
 
-
-
+    plt.savefig('bode_plots.pdf')
 
 
 def main():
     circuit_analysis()
     bode_plots()
-    plt.show()
 
 if __name__ == "__main__":
     main()

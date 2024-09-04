@@ -16,26 +16,10 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Look, some more text
-
-Many times in ``real life'' experimental situations,
-a full-scale formal technical report is not necessary,
-nor is it effective. A brief ``Technical Memo'' is used.
-This technical memorandum, sometimes called an executive
-summary, is less formal than the full report. It is
-not a permanent record of the work, and hence does not
-include all the details and data that should be included
-in a formal report. It can be a very common way of disseminating
-information within an organization. In particular, it
-is used to summarize the results of technical work to
-non-technical colleagues. The memo should be limited
-to two-pages of text, single columns, single-spaced,
-with an 11-point font.  
-
-The introduction section of the memo should cover what
-the basic idea of the lab is.  It doesn't need to be
-particularly long, but it should be more than a single
-sentence.  
+This is the first lab of the semester in which we cover
+the lab basics. We will be doing a brief analysis of 
+a circuit and then measuring and comparing the results of our
+computation. 
 
 \section{Theory}
 \label{sec:theory}
@@ -81,13 +65,6 @@ memo.  You should comment on the trends of what you
 have seen, but do not explain \emph{why} you are seeing
 them in this section.
 
-As an example, Fig.~\ref{fig:ex01} is an example of
-what a proper figure should look like.  Each figure
-should be properly labeled with decently sized fonts.
-In the results section, you could comment  on the oscillations
-in $v_2(t)$, but don't speculate why those oscillations
-are there.  We can also include data in a table.  You
-can see an example table in Tab.~\ref{tab:ex02}.  
 
 \section{Discussion and Conclusions}
 \label{sec:conclusions}
@@ -108,24 +85,22 @@ the document (and not the \LaTeX  source) to Canvas.
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.7\linewidth]{fig_ex.pdf}
-  \caption{every figure needs to have a detailed caption!  Most of the time people will read technical documentation and just look at the figures, so using more detail in the captions is helpful.}
-  \label{fig:ex01}
+  \includegraphics{circuits/circuit_01.pdf}
+  \caption{Circuit for analysis in the main part of the lab.}
+  \label{fig:plots01}
 \end{figure}
 
-\begin{table}[h!]
+\begin{figure}[h!]
   \centering
-  \begin{tabular}{ l | c }
-    \textbf{Item} & \textbf{Quantity} \\
-    \hline
-    $\unit[1]{k\Omega}$ resistor & 1\\
-    $\unit[0.033]{\mu F}$ capacitor & 1\\
-    $\unit[1]{mH}$ inductor & 1\\
-  \end{tabular}
-  \caption{an example of a table.  Once again, please provide a detailed description of the table in the caption.}
-  \label{tab:ex02}
-\end{table}
+  \includegraphics[width=0.7\textwidth]{plots/circuit_analysis.pdf}
+  \caption{Plot for the circuit analyzed in Fig.~\ref{fig:plots01}}
+\end{figure}
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/bode_plots.pdf}
+  \caption{Bode plot of the frequency analysis for the circuit in Fig.~\ref{fig:plots01}}
+\end{figure}
 
 
 \end{document}
