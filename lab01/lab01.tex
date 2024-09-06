@@ -1,5 +1,6 @@
 \documentclass[11pt]{texMemo-gibbons}
 \usepackage[english]{babel}
+\usepackage{siunitx}
 \usepackage{graphicx}
 \usepackage{blindtext}
 \usepackage{amsmath,amssymb,units}
@@ -17,89 +18,138 @@
 \label{sec:introduction}
 
 This is the first lab of the semester in which we cover
-the lab basics. We will be doing a brief analysis of 
-a circuit and then measuring and comparing the results of our
-computation. 
+the lab basics. We start by doing a brief analysis of
+a simple RLC circuit (shown in Fig.~\ref{fig:circuit01}),
+and then measuring and comparing the results of our
+computation. Afterward, we practice some python by writing
+an integral approximation function and comparing it
+to an analytical solution of that integral.
 
 \section{Theory}
 \label{sec:theory}
 
-The theory section of the memo should cover the theory
-behind the lab.  For example, if there is a derivation
-needed, include that here.  When you write up a derivation,
-you don't need to show every single step of mathematical
-manipulation, but you need to include enough steps such
-that a typical engineer could follow it.  You must typeset
-your equation using the \LaTeX  equation editor to make
-it look good.
+\subsection{Circuit Analysis}
+\label{sec:theory_circuit}
 
-For example, suppose we need to compute the complex
-exponential Fourier series coefficients for a saw-tooth
-waveform.  We know that $T_0=2$ and $\omega_0=\pi$.
-We write out the integral we need to solve
+The RLC circuit that we analyzed in this lab is shown
+in Fig.~\ref{fig:circuit01}. Using simple phasor analysis
+we found that the magnitude of $y(t)$ is $72.056~\si{mV}$,
+and the phase angle is $1.499~\si{rad}$ or $\ang{85.87}$.
+Thus, $y(t)$ can be represented as the following. 
 
 \begin{equation}
-  \label{eq:1}
-  D_n = \frac{1}{2}\int^2_0 t e^{-j\pi n t} dt.  
+  \label{eq:y(t)}
+  y(t)=0.072\cdot \sin (2\pi \cdot 10000 t + 1.499)
 \end{equation}
 
-We don't need to go through and show every step of the
-derivation.  It would be sufficient to say that solving
-the integral yields
+\subsection{Computation}
+\label{sec:theory_computation}
+
+Equation 2.1 given in the Lab Manual is shown below.
 
 \begin{equation}
-  \label{eq:2}
-  D_n = \frac{j}{\pi n}.
+  \label{eq:analytical}
+  y(t)=\int^t_{-\infty}5e^{-\tau}u(\tau)d\tau
 \end{equation}
 
+The integral can be simplified to the following:
+
+\[ y(t)=5 \cdot \int^t_{0}e^{-\tau}d\tau \]
+
+And this equates to 
+\begin{equation}
+  y(t) = 
+  \begin{cases}
+    -5e^{-t}+5 & t \geq 0 \\
+    0 & \text{otherwise}
+  \end{cases}
+  \label{eq:solution}
+\end{equation}
+
+
+As will be shown later in the report, this analytical
+solution will be compared against the py\_cumtrapz function
+we've written in python which approximates integrals
+by summing trapezoids.
 
 \section{Results}
 \label{sec:results}
 
-The results section covers the results from the lab.
-Your data will mostly be represented in plots and tables.
-Include those figures AFTER the main body of text on
-a new page.  Data interpretation (what the plots \emph{mean})
-should be reserved for the Conclusions section of the
-memo.  You should comment on the trends of what you
-have seen, but do not explain \emph{why} you are seeing
-them in this section.
+\subsection{Circuit Analysis}
+
+The purpose of the lab was mostly to remind ourselves
+with how to use the lab equipment and familiarize ourselves
+with the techniques we will employ in later labs. After
+a brief analysis of the circuit in Fig.~\ref{fig:circuit01},
+we plotted the expected input and output, and compared
+to the measured values we grabbed from the oscilloscope
+when we built and measured the circuit. Refer to Fig.~\ref{fig:plots01}.
+
+Then we practiced gathering the data from a frequency sweep of the
+oscilloscope. The results can be found in Fig.~\ref{fig:bode_plots}.
+
+\subsection{Computation}
+
+In the computation section of the lab we plot the results
+of our analytical solution shown in Eq.~\ref{eq:solution}
+against the approximation we achieved from our py\_cumtrapz
+function. The results can be found in Fig.~\ref{fig:comparison}.
 
 
 \section{Discussion and Conclusions}
 \label{sec:conclusions}
 
-The conclusions section is for interpreting the data.
-If you see a trend in your data, explain why you see
-it in this section.  Use the theory you learned in class
-in your explanation.
+As can be seen in Fig.~\ref{fig:plots01}, the observed
+values follow very close to the analysis that was calculated.
+The observed output values especially lined up right
+with the analytical solution given in Eq.~\ref{eq:y(t)}.
+The result of the phasor circuit is another sine wave
+that has a decreased magnitude (down to just 72 mV from
+the 1 V input wave), and it is $\sim\ang{85}$ ahead
+of the input signal. These numbers line up great with the 
+values shown in the Bode plots from Fig.~\ref{fig:bode_plots}, where
+the magnitude of the signal is somewhere around -22 dB and the phase
+is just shy of $\ang{90}$.
 
-As a final note, you are expected to use this document
-as a template for your lab submissions.  You are welcome
-to upload this to overleaf to edit/compile the document.
-Or you can work locally using whatever flavor of \LaTeX
-compiler you prefer.  All you need to do is to upload
-the document (and not the \LaTeX  source) to Canvas.
+In the computation portion of the lab, we compared our
+py\_cumtrapz function (which approximates the integral
+of any function) against the analytical solution we
+found in Eq.~\ref{eq:solution}. We made the comparison
+over the range $t \in [-1,5]$. The results from Fig.~\ref{fig:comparison}
+show that our implementation of the py\_cumtrapz function
+and the analytical solution are nearly identical, certainly within
+the tolerance of an approximation that uses only 70 points within
+the range for a calculation. Separating the range into more subdivisions
+would certainly yield a more accurate result.
 
 \clearpage
 
 \begin{figure}[h!]
   \centering
   \includegraphics{circuits/circuit_01.pdf}
-  \caption{Circuit for analysis in the main part of the lab.}
-  \label{fig:plots01}
+  \caption{Circuit for analysis in the lab.}
+  \label{fig:circuit01}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{plots/circuit_analysis.pdf}
-  \caption{Plot for the circuit analyzed in Fig.~\ref{fig:plots01}}
+  \caption{Plot for the circuit analyzed in Fig.~\ref{fig:circuit01}.}
+  \label{fig:plots01}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{plots/bode_plots.pdf}
-  \caption{Bode plot of the frequency analysis for the circuit in Fig.~\ref{fig:plots01}}
+  \caption{Bode plot of the frequency analysis for the circuit in Fig.~\ref{fig:circuit01}.}
+  \label{fig:bode_plots}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/comparison.pdf}
+  \caption{Comparison of the py\_cumtrapz function and the analytical solution.}
+  \label{fig:comparison}
 \end{figure}
 
 
