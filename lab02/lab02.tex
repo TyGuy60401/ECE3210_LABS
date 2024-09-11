@@ -1,6 +1,7 @@
 \documentclass[11pt]{texMemo-gibbons}
 \usepackage[english]{babel}
 \usepackage{graphicx}
+\usepackage{siunitx}
 \usepackage{blindtext}
 \usepackage{amsmath,amssymb,units}
 \usepackage[outdir=./]{epstopdf}
@@ -90,13 +91,27 @@ practice for the real world.
 \section{Results}
 \label{sec:results}
 
+The blue line shown in Fig.~\ref{fig:plot} is the analytical
+solution shown in Eq.~\ref{eq:impulse}, and the orange line
+shows the measured values captured from the oscilloscope. We 
+measured over the interval $t \in [-50, 450]~\si{\us}$ as opposed
+to the recommended $t \in [0, 300]~\si{\us}$ because it showed
+the response better, and matched the scale of the oscilloscope
+more appropriately.
+
+
 \section{Discussion and Conclusions}
 \label{sec:conclusions}
 
 The real part of the solution to the characteristic
-equation $\text{Q}(\lambda)$ is less than 0, so the system
-can be called BIBO stable, which is to say, any
-bounded input will result in a bounded output.
+equation $\text{Q}(\lambda)$ is less than 0, so the
+system can be called BIBO stable, which is to say, any
+bounded input will result in a bounded output. You can
+see this in Fig.~\ref{fig:plot}, when the input function
+was given an impulse, the output of the circuit fell
+to a stable position after some oscillation.
+
+The ora
 
 
 

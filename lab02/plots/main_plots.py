@@ -18,13 +18,15 @@ def plot_impulse_response():
     ax = plt.axes()
     fig.add_axes(ax)
 
-    ax.plot(t_vals, h_vals)
-    ax.plot(t_vals, csv_data['Volt'])
+    ax.plot(t_vals, h_vals, label=r'Analytical Solution')
+    ax.plot(t_vals, csv_data['Volt'], label=r'Observed Values')
 
     ax.set_xticklabels([f"{int(x * 1e6)}" for x in ax.get_xticks().tolist()])
     ax.grid(True, which='both')
 
     ax.set_xlabel(r"Time [$\mathregular{\mu}$s]")
+    ax.set_ylabel(r"Voltage [V]")
+    ax.legend()
     plt.savefig('plot.pdf')
 
 
