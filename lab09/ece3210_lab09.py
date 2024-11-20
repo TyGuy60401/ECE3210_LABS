@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import scipy as sp
+from sympy import solve, Symbol, Eq, symbols
 
 
 def cheby1(fp, fs, r, Gs):
@@ -30,7 +31,22 @@ def cheby1(fp, fs, r, Gs):
     w_ang, h = sp.signal.freqs(numerator, denominator)
     return w_ang, h, zeros, poles
 
-def main():
+
+def second_order_filter(X, Y, Z, R1):
+    C2 = Symbol('C2')
+    C4 = Symbol('C4')
+    # R1 = Symbol('R1')
+    R3 = Symbol('R3')
+    eq1 = Eq(C2 * C4, X)
+    eq2 = Eq(C4 * (R1 + R3), Y)
+    eq3 = Eq(R1 * R3, Z)
+    # eq4 = Eq(R1, R3)
+    solution = solve((eq1, eq2, eq3), (C2, C4, R3))
+
+def chebyshev_components():
+    ...
+
+def part1():
     fp = 7500 #Hz
     fs = 10000 #Hz
     r = 1.5 #dB
@@ -42,6 +58,16 @@ def main():
     plt.ylabel('Amplitude response [dB]')
     plt.grid(True)
     plt.show()
+
+def part2():
+    res = pd.read_csv("./resistors.txt")
+    print(list(res['# Use # to denote comments']))
+
+
+def main():
+    part2()
+
+
 
 if __name__ == "__main__":
     main()
