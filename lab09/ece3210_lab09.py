@@ -32,12 +32,13 @@ def cheby1(fp, fs, r, Gs):
     return w_ang, h, zeros, poles
 
 
-def second_order_filter(X, Y, R):
+def second_order_filter(omega_c_2, omega_c_zeta, R):
     C1 = Symbol('C1')
     C2 = Symbol('C2')
-    eq1 = Eq(1/(R*R*C1*C2), X)
-    eq2 = Eq((2*R)/(R*R*C1), Y)
+    eq1 = Eq(1/(R*R*C1*C2), omega_c_2)
+    eq2 = Eq((2*R)/(R*R*C1), omega_c_zeta)
     solution = solve((eq1, eq2), (C1, C2))
+    return solution
 
 def chebyshev_components():
     ...
@@ -57,7 +58,25 @@ def part1():
 
 def part2():
     res = pd.read_csv("./resistors.txt")
-    print(list(res['# Use # to denote comments']))
+    print("First filter")
+    for r in list(res['# Use # to denote comments']):
+        r = int(r)
+        w_c_2 = 1.376e6
+        w_c_z = 182.698
+        print(r, second_order_filter(w_c_2, w_c_z, r))
+
+    print("Second filter")
+    for r in list(res['# Use # to denote comments']):
+        r = int(r)
+        w_c_2 = 5.79651e5
+        w_c_z = 478.308
+        print(r, second_order_filter(w_c_2, w_c_z, r))
+
+    print("Final first order")
+    for r in list(res['# Use # to denote comments']):
+        r = float(r)
+        print(r, 1 / (295.611 * r))
+
 
 
 def main():
