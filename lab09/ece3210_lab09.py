@@ -32,16 +32,12 @@ def cheby1(fp, fs, r, Gs):
     return w_ang, h, zeros, poles
 
 
-def second_order_filter(X, Y, Z, R1):
+def second_order_filter(X, Y, R):
+    C1 = Symbol('C1')
     C2 = Symbol('C2')
-    C4 = Symbol('C4')
-    # R1 = Symbol('R1')
-    R3 = Symbol('R3')
-    eq1 = Eq(C2 * C4, X)
-    eq2 = Eq(C4 * (R1 + R3), Y)
-    eq3 = Eq(R1 * R3, Z)
-    # eq4 = Eq(R1, R3)
-    solution = solve((eq1, eq2, eq3), (C2, C4, R3))
+    eq1 = Eq(1/(R*R*C1*C2), X)
+    eq2 = Eq((2*R)/(R*R*C1), Y)
+    solution = solve((eq1, eq2), (C1, C2))
 
 def chebyshev_components():
     ...
