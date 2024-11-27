@@ -6,8 +6,8 @@ from sympy import solve, Symbol, Eq, symbols
 
 
 def cheby1(fp, fs, r, Gs):
-    wp = fp/(2*np.pi)
-    ws = fs/(2*np.pi)
+    wp = fp*(2*np.pi)
+    ws = fs*(2*np.pi)
     N, wc = sp.signal.cheb1ord(wp, ws, r, Gs, analog=True)
     numerator, denominator = sp.signal.cheby1(N, r, wc, analog=True, output='ba')
     zeros, poles, krap = sp.signal.cheby1(N, r, wc, analog=True, output='zpk')
@@ -18,8 +18,6 @@ def cheby1(fp, fs, r, Gs):
     coords = [(np.real(pole), np.imag(pole)) for pole in poles]
     for coord in coords:
         ax.plot(coord[0], coord[1], 'x', color='blue')
-    # ymin, ymax = ax.get_ybound()
-    # ax.vlines([0], colors=['#000000'], ymin=ymin, ymax=ymax)
     ax.set_xbound(-325, 325)
     ax.grid()
     plt.show()
@@ -61,25 +59,36 @@ def part2():
     print("First filter")
     for r in list(res['# Use # to denote comments']):
         r = int(r)
-        w_c_2 = 1.376e6
-        w_c_z = 182.698
+        w_c_2 = 2.149e9
+        w_c_z = 7212
         print(r, second_order_filter(w_c_2, w_c_z, r))
 
     print("Second filter")
     for r in list(res['# Use # to denote comments']):
         r = int(r)
-        w_c_2 = 5.79651e5
-        w_c_z = 478.308
+        w_c_2 = 9.034e8
+        w_c_z = 18882
         print(r, second_order_filter(w_c_2, w_c_z, r))
 
     print("Final first order")
     for r in list(res['# Use # to denote comments']):
         r = float(r)
-        print(r, 1 / (295.611 * r))
+        print(r, 1 / (1.167e4 * r))
 
 
 
 def main():
+    # fp = 7500 #Hz
+    # fs = 10000 #Hz
+    # r = 1.5 #dB
+    # Gs = 24 #dB
+    # w_ang, h, zeros, poles = cheby1(fp, fs, r, Gs)
+    # import matplotlib.pyplot as plt
+    # plt.semilogx(w_ang, 20 * np.log10(abs(h)))
+    # plt.xlabel('Frequency')
+    # plt.ylabel('Amplitude response [dB]')
+    # plt.grid(True)
+    # plt.show()
     part2()
 
 
