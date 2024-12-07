@@ -89,6 +89,7 @@ def main():
     # plt.ylabel('Amplitude response [dB]')
     # plt.grid(True)
     # plt.show()
+    part1()
     part2()
 
 
