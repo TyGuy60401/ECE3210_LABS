@@ -1,0 +1,33 @@
+\documentclass{standalone}
+\usepackage{circuitikz}
+
+\begin{document}
+  \begin{circuitikz}[american]
+    % \ctikzset{tripoles/mos style/arrows}
+    \ctikzset{}
+    % \draw [help lines, red, thin, dotted] (-3, -4) grid (15, 4);
+
+    
+    \draw (0,0) node[op amp, anchor=-](O1) {LF353N};
+    \draw (6,0) node[op amp, anchor=-](O2) {LF353N};
+    \draw (11,0) node[op amp, anchor=-](O3) {LF353N};
+
+    \draw (-4, -1) node[left] (vi) {$V_i$} to[resistor, o-*, l=R$_1$] ++(2, 0) coordinate (A1) to[resistor, l=R$_2$] (O1.+);
+    \draw (A1) to[capacitor, l=C$_1$] ++(0, 2) coordinate (A2) {} -| (O1.out);
+    \draw (O1.-) to[short, -*] (O1.- |- A2);
+    \draw (O1.+) to[capacitor, *-, l_=C$_2$] ++(0, -2) node[ground] {};
+
+    \draw (O1.out) to[short, *-] (O1.out |- O2.+) to[resistor, l=R$_3$] ++(2, 0) coordinate (B1) {} to[resistor, l=R$_4$] (O2.+);
+    \draw (B1) to[capacitor, *-, l=C$_3$] ++ (0, 2)  coordinate (B2) {} -| (O2.out);
+    \draw (O2.-) to[short, -*] (O2.- |- B2);
+    \draw (O2.+) to[capacitor, *-, l_=C$_4$] ++(0, -2) node[ground] {};
+
+    \draw (O2.out) to[short, *-] (O2.out |- O3.+) to[resistor, -*, l=R$_5$] (O3.+) to[capacitor, l_=C$_5$] ++(0, -2) node[ground] {};
+
+    \draw (O3.-) -- ++(0, 1) -| (O3.out);
+
+    \draw (O3.out) to[short, -o] ++(1, 0) node[right] {$V_o$};
+    
+
+  \end{circuitikz}
+\end{document}
